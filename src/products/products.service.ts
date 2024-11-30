@@ -15,7 +15,6 @@ export class ProductsService {
   ) {}
 
   getProducts(search: string): Promise<Product[]> {
-    console.log(search);
     return search
       ? this.productRepo.find({ description: { $like: `%${search}%` } })
       : this.productRepo.findAll();
