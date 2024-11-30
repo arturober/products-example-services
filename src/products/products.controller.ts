@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   HttpCode,
@@ -8,6 +9,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   Req,
   ValidationPipe,
 } from '@nestjs/common';
@@ -25,8 +27,12 @@ export class ProductsController {
   ) {}
 
   @Get('')
-  async getProducts(@Req() req: Request) {
-    const products = await this.productsService.getProducts();
+  async getProducts(
+    @Req() req: Request,
+    @Query('search', new DefaultValuePipe(null))
+    search?: string,
+  ) {
+    const products = await this.productsService.getProducts(search);
     return {
       products: products.map((p) => {
         p.imageUrl =

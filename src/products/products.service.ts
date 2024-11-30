@@ -14,8 +14,10 @@ export class ProductsService {
     private imgService: ImageService,
   ) {}
 
-  getProducts(): Promise<Product[]> {
-    return this.productRepo.findAll();
+  getProducts(search: string): Promise<Product[]> {
+    return search
+      ? this.productRepo.findAll()
+      : this.productRepo.find({ description: { $like: `%${search}%` } });
   }
 
   async getProduct(id: number) {
