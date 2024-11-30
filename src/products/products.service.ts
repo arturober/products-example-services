@@ -15,9 +15,10 @@ export class ProductsService {
   ) {}
 
   getProducts(search: string): Promise<Product[]> {
+    console.log(search);
     return search
-      ? this.productRepo.findAll()
-      : this.productRepo.find({ description: { $like: `%${search}%` } });
+      ? this.productRepo.find({ description: { $like: `%${search}%` } })
+      : this.productRepo.findAll();
   }
 
   async getProduct(id: number) {
